@@ -60,8 +60,7 @@ export const menu: CoreMenu[] = [
             type: 'item',
             icon: 'server',
             url: 'request-claim/list'
-          },
-
+          }
 
         ]
       },
@@ -437,7 +436,17 @@ export const menu: CoreMenu[] = [
             type: 'item',
             icon: 'circle',
             url: 'apps/e-commerce/checkout'
+          },
+
+          {
+            id: 'requests-add',
+            title: 'Requests add',
+            translate: 'Requests add',
+            type: 'item',
+            icon: 'circle',
+            url: 'request-claim/add'
           }
+
         ]
       },
       {

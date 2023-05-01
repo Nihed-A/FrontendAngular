@@ -90,6 +90,15 @@
                   <span class="add-to-cart">View in cart</span>
                 </a>
                 <a
+                        *ngIf="product.isInCart === true"
+                        routerLink="/request-claim/add"
+                        class="btn btn-primary btn-cart mr-0 mr-sm-1 mb-1 mb-sm-0"
+                        rippleEffect
+                >
+                  <i data-feather="alert-circle" class="mr-25"></i>
+                  <span class="add-to-cart">add complaint</span>
+                </a>
+                <a
                   href="javascript:void(0)"
                   (click)="toggleWishlist(product)"
                   class="btn btn-outline-secondary btn-wishlist mr-0 mr-sm-1 mb-1 mb-sm-0"
