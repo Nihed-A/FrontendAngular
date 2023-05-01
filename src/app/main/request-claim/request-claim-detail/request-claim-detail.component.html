@@ -1,0 +1,14 @@
+<h1>Claim Details</h1>
+
+<div >
+    <p><strong>ID:</strong> {{requestClaim.idRequestClaim}}</p>
+    <p><strong>Title:</strong> {{requestClaim.summary}}</p>
+    <p><strong>Description:</strong> {{requestClaim.typeClaim}}</p>
+    <p><strong>Status:</strong> {{requestClaim.dateCreation}}</p>
+
+</div>
+
+
+<div *ngIf="!claimDetails">
+    <p>Loading claim details...</p>
+</div>

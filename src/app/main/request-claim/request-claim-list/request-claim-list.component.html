@@ -1,0 +1,219 @@
+<div class="col-md-6 col-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-end">
+            <h4 class="card-title">Claims statistics</h4>
+
+        </div>
+        <div class="card-body">
+            <div id="customerChartoptions" #customerChartoptionsRef>
+                <!-- Apexchart component-->
+                <apx-chart
+                        [chart]="{
+                        type: 'pie',
+                        height: 345,
+                        width:
+                          isMenuToggled === false
+                            ? customerChartoptionsRef.offsetWidth
+                            : customerChartoptions.chart.width,
+                        toolbar: {
+                          show: false
+                        }
+                      }"
+                        [labels]="customerChartoptions.labels"
+                        [series]="customerChartoptions.series"
+                        [dataLabels]="customerChartoptions.dataLabels"
+                        [legend]="customerChartoptions.legend"
+                        [stroke]="customerChartoptions.stroke"
+                        [colors]="customerChartoptions.colors"
+                ></apx-chart>
+                <!-- / Apexchart component-->
+            </div>
+            <div class="pt-25">
+                <div class="d-flex justify-content-between mb-1">
+                    <div class="d-flex align-items-center">
+                        <i data-feather="circle" class="font-medium-1 text-primary"></i>
+                        <span class="font-weight-bold ml-75">Pending</span>
+                    </div>
+                    <span>{{ pending }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                    <div class="d-flex align-items-center">
+                        <i data-feather="circle" class="font-medium-1 text-warning"></i>
+                        <span class="font-weight-bold ml-75">In Progress</span>
+                    </div>
+                    <span>{{ inProgress }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <i data-feather="circle" class="font-medium-1 text-danger"></i>
+                        <span class="font-weight-bold ml-75">Refused</span>
+                    </div>
+                    <span>{{ refused}}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <i data-feather="circle" class="font-medium-1 text-danger"></i>
+                        <span class="font-weight-bold ml-75">Resolved</span>
+                    </div>
+                    <span>{{ resolved}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+        <div class="card">
+            <h5 class="card-header">Search Filter</h5>
+            <div class="card-body">
+                <div class="users-list-filter">
+                    <form>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <fieldset class="form-group">
+                                    <ng-select
+                                            [items]="selectRole"
+                                            [(ngModel)]="selectedRole"
+                                            name="selectedRole"
+                                            bindLabel="name"
+                                            placeholder="Select Role"
+                                            (change)="filterByRole($event)"
+                                    ></ng-select>
+                                </fieldset>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <fieldset class="form-group">
+                                    <ng-select
+                                            [items]="selectPlan"
+                                            [(ngModel)]="selectedPlan"
+                                            name="selectedPlan"
+                                            bindLabel="name"
+                                            placeholder="Select Plan"
+                                            (change)="filterByPlan($event)"
+                                    ></ng-select>
+                                </fieldset>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <fieldset class="form-group">
+                                    <ng-select
+                                            [items]="selectStatus"
+                                            [(ngModel)]="selectedStatus"
+                                            name="selectedStatus"
+                                            bindLabel="name"
+                                            placeholder="Select Status"
+                                            (change)="filterByStatus($event)"
+                                    ></ng-select>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <section id="ngx-datatable-kitchen-sink">
+
+
+            <core-card-snippet >
+                <h4 class="card-title">Request Claims List</h4>
+                <div class="row">
+                    <div class="col-12 mb-50">
+
+                        <a csvLink [data]="data" class="btn btn-outline-secondary float-right mr-1" rippleEffect
+                        >Export CSV</a
+                        >
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                            <label class="d-flex align-items-center"
+                            >Show
+                                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                entries</label
+                            >
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                        <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                            <label class="d-flex align-items-center"
+                            >Search<input
+                                    type="search"
+                                    placeholder="Search"
+                                    class="form-control ml-25"
+                                    (keyup)="filterUpdate($event)"
+                                    (search)="filterUpdate($event)"
+                            /></label>
+                        </div>
+                    </div>
+                </div>
+                <ngx-datatable
+                    #table
+                    class="bootstrap core-bootstrap"
+                    [columnMode]="ColumnMode.force"
+                    [headerHeight]="40"
+                    [rowHeight]="120"
+                    [footerHeight]="50"
+                    rowHeight="auto"
+                    [limit]="10"
+                    [rows]="data"
+                    [limit]="basicSelectedOption"
+                    [scrollbarH]="true"
+                >
+                    <ngx-datatable-column name="Id" prop="idRequestClaim" >
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            <div class="cell-wrap">{{value}}</div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Summary" prop="summary" >
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            <div class="cell-wrap">{{value}}</div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Creation Date" prop="dateCreation" [minWidth]="200" >
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            <div class="cell-wrap">{{value | date:'short'}}</div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Claim Type" prop="typeClaim">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            <div class="cell-wrap">{{value}}</div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Order" prop="order">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            <div class="cell-wrap">{{value}}</div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Status" prop="status">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            <div class="cell-wrap">{{value}}</div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+
+                    <ngx-datatable-column name="Actions"  [sortable]="false">
+                        <ng-template ngx-datatable-cell-template style="flex: auto" let-row="row">
+                            <button class="btn btn-outline-warning float-right mr-1" (click)="resolveRequest(row)">Resolve</button>
+                            <button class="btn btn-outline-danger float-right mr-1" (click)="deleteRequest(row.idRequestClaim)">Delete</button>
+                            <a [routerLink]="[row.idRequestClaim]" class="btn btn-outline-primary float-right mr-1" rippleEffect>Details</a>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                </ngx-datatable>
+            </core-card-snippet>
+        </section>
+
+
+        <!--/ ngx-datatables responsive -->
+    </div>
+</div>

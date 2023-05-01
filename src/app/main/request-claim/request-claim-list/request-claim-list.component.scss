@@ -1,0 +1,11 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+
+.datatable-scroll {
+  width: auto !important;
+}
+.cell-wrap {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
